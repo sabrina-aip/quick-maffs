@@ -8,7 +8,7 @@ const hr = document.querySelector('.hour')
 const min = document.querySelector('.minute')
 const sec = document.querySelector('.second')
 
-const target = 3;
+const target = 30;
 let score = 0;
 let wrong = 0;
 let attempt;

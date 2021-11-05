@@ -6,16 +6,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" media="screen and (min-width: 601px)" href="stylesheet.css" />
   <link rel="stylesheet" media="screen and (max-width: 600px)" href="mobile.css" />
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
 
-  <title>quick maths | error breakdown</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+  <title>quick maths | results</title>
 </head>
 <body>
-  <div class="detail-wrapper">
-    <div class="error-breakdown"></div>
-    <br>
-    <a href="results.html" class="btn">go back</a>
-    <br><br><br>  
+  <div class="parent">
+      <div class="player-wrapper">
+        <iframe class="player" src="https://www.youtube-nocookie.com/embed/Kpm8rEywBDQ" frameborder="0"></iframe>
+      </div>
+    <div class="end-stat">
+      <h1>errors</h1>
+      <p class ="wrong"></p>
+      <a href="details.html" class="btn">view results</a>
+      <br>
+      <br>
+      <br>
+      <h1>final time</h1>
+      <p class ="timer"></p>
+      <br>
+      <a href="index.html" class="btn">try again</a>  
+    </div>
   </div>
   <div class="footer">
     <!--- social link --->
@@ -25,6 +36,6 @@
       <a href="https://www.instagram.com/answerinprogress" class="fab fa-instagram" target="_blank" rel="noopener noreferrer"></a>
     </div>     
   </div>
-  <script src="detailBreakdown.js"></script>
+  <script src="results.js"></script>
 </body>
 </html>

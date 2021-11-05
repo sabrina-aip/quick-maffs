@@ -9,7 +9,7 @@ const min = document.querySelector('.minute')
 const sec = document.querySelector('.second')
 
 // variables for quiz function
-const target = 30;
+const target = 20;
 let score = 0;
 let wrong = 0;
 let attempt;
@@ -92,7 +92,7 @@ function checkAnswer(e){
     Q.push(gen[0]);
     userA.push(a.value);
     trueA.push(answer);
-    if (Number(a.value) == answer){
+    if ((Number(a.value) == answer) & (a.value != '')){
       score ++;
       isTrue.push(true)
     }
@@ -125,7 +125,7 @@ function victory(){
   sessionStorage.setItem('userA', userA);
   sessionStorage.setItem('trueA', trueA);
   sessionStorage.setItem('isTrue', isTrue)
-  window.location.replace("victory.html");
+  window.location.replace("results.html");
 }
 
 function start(){

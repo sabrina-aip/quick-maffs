@@ -1,4 +1,4 @@
-.btn {
+.btn:hover {
   background-color: black;
   padding: 5px 25px 5px 25px;
   border-radius: 25px;
@@ -6,7 +6,7 @@
   text-decoration: none;
 }
 
-.btn-2 {
+.btn {
   background-color: white;
   border: solid 2px black;
   padding: 5px 25px 5px 25px;

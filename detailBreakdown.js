@@ -7,16 +7,31 @@ const wrong = sessionStorage.getItem('wrong')
 const eb = document.querySelector('.error-breakdown')
 const output = []
 
+console.log(isTrue);
+
 for (let i=0; i<Q.length; i++){
-  output.push(
-    `
-    <div class="a-${isTrue[i]}">
-    <h3>Q${QNum[i]}. ${Q[i]}</h3>
-    <p>your answer: ${userA[i]}</p>
-    <p>correct answer: ${trueA[i]}</p>
-    </div>
-    `
-  )
+  
+  if (isTrue[i] === "true"){
+    output.push(
+      `
+      <div class="a-${isTrue[i]}">
+      <h3>Question ${QNum[i]}</h3>
+      <p>${Q[i]} = ${userA[i]}</p>
+      </div>
+      `
+    )
+  }
+  else {
+    output.push(
+      `
+      <div class="a-${isTrue[i]}">
+      <h3>Question ${QNum[i]}</h3>
+      <p>${Q[i]} ≠ ${userA[i]}</p>
+      <p>correct answer: ${trueA[i]}</p>
+      </div>
+      `  
+    )
+  }
 };
 
 eb.innerHTML = output.join('');

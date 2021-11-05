@@ -6,6 +6,15 @@
   text-decoration: none;
 }
 
+.btn-2 {
+  background-color: white;
+  border: solid 2px black;
+  padding: 5px 25px 5px 25px;
+  border-radius: 25px;
+  color: black;
+  text-decoration: none;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -98,4 +107,31 @@ input {
 
 .end-stat {
   text-align: center;
+}
+
+/* For Firefox */
+input[type='number'] {
+  -moz-appearance:textfield;
+}
+
+/* Webkit browsers like Safari and Chrome */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.detail-wrapper {
+  margin: 20px 0 20px 0;
+}
+
+.a-false {
+  color: red;
+  padding: 5px 0 5px 0;
+  vertical-align: middle;
+}
+
+.a-true {
+  padding: 5px 0 5px 0;
+  vertical-align: middle;
 }

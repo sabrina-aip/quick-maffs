@@ -8,6 +8,7 @@ const hr = document.querySelector('.hour')
 const min = document.querySelector('.minute')
 const sec = document.querySelector('.second')
 
+// variables for quiz function
 const target = 30;
 let score = 0;
 let wrong = 0;
@@ -20,6 +21,14 @@ let timeout = null;
 let startTime;
 let elapsedTime = 0;
 
+// variables for results breakdown
+let QNum = [];
+let Q = [];
+let userA = [];
+let trueA = [];
+let isTrue = [];
+
+// variables for timer
 let second = 00;
 let minute = 00;
 let hour = 00;
@@ -72,17 +81,24 @@ function postQuestion(){
   s.textContent = `${score}/${target}`;
   answer = gen[1];
   console.log(answer)
+  a.focus()
   a.addEventListener('keyup', checkAnswer);
 };
 
 // checks answer to question (triggered on keyup and recurses postQuestion)
 function checkAnswer(e){
   if(e.keyCode == 13){
-    if (parseInt(a.value) === answer){
+    QNum.push(questionNumber);
+    Q.push(gen[0]);
+    userA.push(a.value);
+    trueA.push(answer);
+    if (Number(a.value) == answer){
       score ++;
+      isTrue.push(true)
     }
-    else if (parseInt(a.value) !== answer){
+    else if (Number(a.value) != answer){
       wrong ++;
+      isTrue.push(false)
     };
     a.removeEventListener('keyup', checkAnswer);
     a.value = '';
@@ -104,6 +120,11 @@ function checkAnswer(e){
 function victory(){
   sessionStorage.setItem('wrong', wrong);
   sessionStorage.setItem('timer', `${convertToString(hour)}:${convertToString(minute)}:${convertToString(second)}`);
+  sessionStorage.setItem('QNum', QNum);
+  sessionStorage.setItem('Q', Q);
+  sessionStorage.setItem('userA', userA);
+  sessionStorage.setItem('trueA', trueA);
+  sessionStorage.setItem('isTrue', isTrue)
   window.location.replace("victory.html");
 }
 

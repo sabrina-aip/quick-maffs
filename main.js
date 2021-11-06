@@ -14,15 +14,17 @@ const maxTerm = 20;
 let score = 0;
 let wrong = 0;
 let questionNumber = 1;
-let lastQuestion = "";
-let answered = false;
 
-// variables for results breakdown
-let historicalQuestionNumbers = [];
+// This holds the history of questions, answers, and if they were correct.
+// The last entry is also the current question posed to the user.
 let historicalQuestions = [];
-let historicalUserAnswers = [];
-let historicalTrueAnswers = [];
-let historicalIsTrue = [];
+
+// This function gets the user score, by checking the real and user answers from historicalQuestions.
+function getScore() {
+  return historicalQuestions.filter(
+    (question) => question.realAnswer == question.userAnswer
+  ).length;
+}
 
 // variables for timer
 let second = 00;
@@ -55,7 +57,7 @@ function genQuestion() {
       answer = ranX * ranY;
       break;
     case "d":
-      if ((ranY != 0) & (ranY != 1) & Number.isInteger(ranX / ranY)) {
+      if ((ranY != 0) & (ranY != 1) && Number.isInteger(ranX / ranY)) {
         question = `${ranX} / ${ranY}`;
         answer = ranX / ranY;
       }
@@ -69,64 +71,75 @@ function genQuestion() {
 function postQuestion() {
   answered = false;
   gen = genQuestion();
-  if (lastQuestion === gen[0] || gen[0] == undefined) {
+  if (
+    historicalQuestions[historicalQuestions.length - 2] === gen[0] ||
+    gen[0] == undefined
+  ) {
     postQuestion();
+  } else {
+    const currentAnswer = {
+      question: gen[0],
+      realAnswer: gen[1],
+      userAnswer: undefined,
+    };
+    historicalQuestions.push(currentAnswer);
+
+    console.log(currentAnswer.realAnswer);
+
+    questionNumberElement.textContent = `Question ${historicalQuestions.length}`;
+    questionElement.textContent = currentAnswer.question;
+    scoreElement.textContent = `${getScore()}/${target}`;
+    attemptElement.focus();
+    attemptElement.click();
+    attemptElement.addEventListener("keyup", checkAnswer);
   }
-  questionNumberElement.textContent = `Question ${questionNumber}`;
-  questionElement.textContent = gen[0];
-  scoreElement.textContent = `${score}/${target}`;
-  console.log(gen[1]);
-  attemptElement.focus();
-  attemptElement.click();
-  attemptElement.addEventListener("keyup", checkAnswer);
 }
 
 // checks answer to question (triggered on keyup and recurses postQuestion)
 function checkAnswer(e) {
-  if (e.keyCode == 13) {
-    historicalQuestionNumbers.push(questionNumber);
-    historicalQuestions.push(gen[0]);
-    historicalUserAnswers.push(attemptElement.value);
-    historicalTrueAnswers.push(gen[1]);
-    if (
-      (Number(attemptElement.value) == gen[1]) &
-      (attemptElement.value != "")
-    ) {
-      score++;
-      historicalIsTrue.push(true);
-    } else if (Number(attemptElement.value) != gen[1]) {
-      wrong++;
-      historicalIsTrue.push(false);
-    }
+  if (e.keyCode == 13 && attemptElement.value != "") {
+    historicalQuestions[historicalQuestions.length - 1].userAnswer =
+      attemptElement.value;
     attemptElement.removeEventListener("keyup", checkAnswer);
     attemptElement.value = "";
-    answered = true;
-    questionNumber++;
-    if (answered === true) {
-      if (score < target) {
-        postQuestion();
-      } else {
-        scoreElement.textContent = `${score}/${target}`;
-        victory();
-      }
+
+    if (getScore() < target) {
+      postQuestion();
+    } else {
+      scoreElement.textContent = `${getScore()}/${target}`;
+      victory();
     }
   }
 }
 
 // got to victory page
 function victory() {
-  sessionStorage.setItem("wrong", wrong);
+  sessionStorage.setItem("wrong", historicalQuestions.length - getScore());
   sessionStorage.setItem(
     "timer",
     `${convertToString(hour)}:${convertToString(minute)}:${convertToString(
       second
     )}`
   );
-  sessionStorage.setItem("QNum", questionNumber);
-  sessionStorage.setItem("Q", historicalQuestions);
-  sessionStorage.setItem("userA", historicalUserAnswers);
-  sessionStorage.setItem("trueA", historicalTrueAnswers);
-  sessionStorage.setItem("isTrue", historicalIsTrue);
+  sessionStorage.setItem("QNum", historicalQuestions.length);
+  sessionStorage.setItem(
+    "Q",
+    historicalQuestions.map((question) => question.question)
+  );
+  sessionStorage.setItem(
+    "userA",
+    historicalQuestions.map((question) => question.userAnswer)
+  );
+  sessionStorage.setItem(
+    "trueA",
+    historicalQuestions.map((question) => question.realAnswer)
+  );
+  sessionStorage.setItem(
+    "isTrue",
+    historicalQuestions.map(
+      (question) => question.realAnswer == question.userAnswer
+    )
+  );
   window.location.replace("results.html");
 }
 

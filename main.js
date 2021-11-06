@@ -12,14 +12,9 @@ const secondElement = document.querySelector(".second");
 const target = 20;
 let score = 0;
 let wrong = 0;
-let attempt;
 let questionNumber = 1;
-let prompts = [];
 let lastQuestion = "";
 let answered = false;
-let timeout = null;
-let startTime;
-let elapsedTime = 0;
 
 // variables for results breakdown
 let historicalQuestionNumbers = [];
@@ -32,7 +27,6 @@ let historicalIsTrue = [];
 let second = 00;
 let minute = 00;
 let hour = 00;
-let elapsed;
 
 // FUNCTIONS
 
@@ -76,8 +70,7 @@ function postQuestion() {
   questionNumberElement.textContent = `Question ${questionNumber}`;
   questionElement.textContent = gen[0];
   scoreElement.textContent = `${score}/${target}`;
-  answer = gen[1];
-  console.log(answer);
+  console.log(gen[1]);
   attemptElement.focus();
   attemptElement.click();
   attemptElement.addEventListener("keyup", checkAnswer);
@@ -89,14 +82,14 @@ function checkAnswer(e) {
     historicalQuestionNumbers.push(questionNumber);
     historicalQuestions.push(gen[0]);
     historicalUserAnswers.push(attemptElement.value);
-    historicalTrueAnswers.push(answer);
+    historicalTrueAnswers.push(gen[1]);
     if (
-      (Number(attemptElement.value) == answer) &
+      (Number(attemptElement.value) == gen[1]) &
       (attemptElement.value != "")
     ) {
       score++;
       historicalIsTrue.push(true);
-    } else if (Number(attemptElement.value) != answer) {
+    } else if (Number(attemptElement.value) != gen[1]) {
       wrong++;
       historicalIsTrue.push(false);
     }
@@ -135,7 +128,7 @@ function victory() {
 function start() {
   // every second, elapsed
   addTime();
-  timer = setInterval(addTime, 1000);
+  setInterval(addTime, 1000);
 }
 
 function convertToString(e) {

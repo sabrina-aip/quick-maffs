@@ -41,20 +41,27 @@ function genQuestion() {
   let ranX = Math.floor(Math.random() * (maxTerm + 1));
   let ranY = Math.floor(Math.random() * (maxTerm + 1));
 
-  // generate question and answer
-  if ((ranOp == "a") & Number.isInteger(ranX + ranY)) {
-    question = `${ranX} + ${ranY}`;
-    answer = ranX + ranY;
-  } else if ((ranOp == "s") & Number.isInteger(ranX - ranY)) {
-    question = `${ranX} - ${ranY}`;
-    answer = ranX - ranY;
-  } else if ((ranOp == "m") & Number.isInteger(ranX * ranY)) {
-    question = `${ranX} x ${ranY}`;
-    answer = ranX * ranY;
-  } else if ((ranY != 0) & (ranY != 1) & Number.isInteger(ranX / ranY)) {
-    question = `${ranX} / ${ranY}`;
-    answer = ranX / ranY;
+  switch (ranOp) {
+    case "a":
+      question = `${ranX} + ${ranY}`;
+      answer = ranX + ranY;
+      break;
+    case "s":
+      question = `${ranX} - ${ranY}`;
+      answer = ranX - ranY;
+      break;
+    case "m":
+      question = `${ranX} * ${ranY}`;
+      answer = ranX * ranY;
+      break;
+    case "d":
+      if ((ranY != 0) & (ranY != 1) & Number.isInteger(ranX / ranY)) {
+        question = `${ranX} / ${ranY}`;
+        answer = ranX / ranY;
+      }
+      break;
   }
+
   return [question, answer];
 }
 

@@ -1,12 +1,12 @@
 // Events
 
-const qn = document.querySelector('.question-number');
-const q = document.querySelector('.question');
-const a = document.querySelector('#attempt');
-const s = document.querySelector('.score');
-const hr = document.querySelector('.hour')
-const min = document.querySelector('.minute')
-const sec = document.querySelector('.second')
+const questionNumberElement = document.querySelector('.question-number');
+const questionElement = document.querySelector('.question');
+const attemptElement = document.querySelector('#attempt');
+const scoreElement = document.querySelector('.score');
+const hourElement = document.querySelector('.hour')
+const minuteElement = document.querySelector('.minute')
+const secondElement = document.querySelector('.second')
 
 // variables for quiz function
 const target = 20;
@@ -22,11 +22,11 @@ let startTime;
 let elapsedTime = 0;
 
 // variables for results breakdown
-let QNum = [];
-let Q = [];
-let userA = [];
-let trueA = [];
-let isTrue = [];
+let historicalQuestionNumbers = [];
+let historicalQuestions = [];
+let historicalUserAnswers = [];
+let historicalTrueAnswers = [];
+let historicalIsTrue = [];
 
 // variables for timer
 let second = 00;
@@ -76,33 +76,33 @@ function postQuestion(){
   if ((lastQuestion === gen[0]) || (gen[0] == undefined)){
     postQuestion();
   };
-  qn.textContent = `Question ${questionNumber}`;
-  q.textContent = gen[0];
-  s.textContent = `${score}/${target}`;
+  questionNumberElement.textContent = `Question ${questionNumber}`;
+  questionElement.textContent = gen[0];
+  scoreElement.textContent = `${score}/${target}`;
   answer = gen[1];
   console.log(answer)
-  a.focus();
-  a.click();
-  a.addEventListener('keyup', checkAnswer);
+  attemptElement.focus();
+  attemptElement.click();
+  attemptElement.addEventListener('keyup', checkAnswer);
 };
 
 // checks answer to question (triggered on keyup and recurses postQuestion)
 function checkAnswer(e){
   if(e.keyCode == 13){
-    QNum.push(questionNumber);
-    Q.push(gen[0]);
-    userA.push(a.value);
-    trueA.push(answer);
-    if ((Number(a.value) == answer) & (a.value != '')){
+    historicalQuestionNumbers.push(questionNumber);
+    historicalQuestions.push(gen[0]);
+    historicalUserAnswers.push(attemptElement.value);
+    historicalTrueAnswers.push(answer);
+    if ((Number(attemptElement.value) == answer) & (attemptElement.value != '')){
       score ++;
-      isTrue.push(true)
+      historicalIsTrue.push(true)
     }
-    else if (Number(a.value) != answer){
+    else if (Number(attemptElement.value) != answer){
       wrong ++;
-      isTrue.push(false)
+      historicalIsTrue.push(false)
     };
-    a.removeEventListener('keyup', checkAnswer);
-    a.value = '';
+    attemptElement.removeEventListener('keyup', checkAnswer);
+    attemptElement.value = '';
     answered = true;
     questionNumber++;
     if (answered === true){
@@ -110,7 +110,7 @@ function checkAnswer(e){
         postQuestion();
       }
       else{
-        s.textContent = `${score}/${target}`;
+        scoreElement.textContent = `${score}/${target}`;
         victory();
       };  
     }
@@ -121,11 +121,11 @@ function checkAnswer(e){
 function victory(){
   sessionStorage.setItem('wrong', wrong);
   sessionStorage.setItem('timer', `${convertToString(hour)}:${convertToString(minute)}:${convertToString(second)}`);
-  sessionStorage.setItem('QNum', QNum);
-  sessionStorage.setItem('Q', Q);
-  sessionStorage.setItem('userA', userA);
-  sessionStorage.setItem('trueA', trueA);
-  sessionStorage.setItem('isTrue', isTrue)
+  sessionStorage.setItem('QNum', questionNumber);
+  sessionStorage.setItem('Q', historicalQuestions);
+  sessionStorage.setItem('userA', historicalUserAnswers);
+  sessionStorage.setItem('trueA', historicalTrueAnswers);
+  sessionStorage.setItem('isTrue', historicalIsTrue)
   window.location.replace("results.html");
 }
 
@@ -152,9 +152,9 @@ function addTime(){
     hour++;
     minute = 00
   }
-  hr.textContent = convertToString(hour);
-  min.textContent = convertToString(minute);
-  sec.textContent = convertToString(second);
+  hourElement.textContent = convertToString(hour);
+  minuteElement.textContent = convertToString(minute);
+  secondElement.textContent = convertToString(second);
   
 }
 

@@ -10,6 +10,7 @@ const secondElement = document.querySelector(".second");
 
 // variables for quiz function
 const target = 20;
+const maxTerm = 20;
 let score = 0;
 let wrong = 0;
 let questionNumber = 1;
@@ -33,15 +34,12 @@ let hour = 00;
 // creates a random basic math question
 function genQuestion() {
   let question, answer;
-  let numbers = [];
-  for (let i = 0; i <= 20; i++) {
-    numbers.push(i);
-  }
+
   let operators = ["a", "s", "m", "d"];
   // randomly generate operator and terms
   let ranOp = operators[Math.floor(Math.random() * operators.length)];
-  let ranX = numbers[Math.floor(Math.random() * numbers.length)];
-  let ranY = numbers[Math.floor(Math.random() * numbers.length)];
+  let ranX = Math.floor(Math.random() * (maxTerm + 1));
+  let ranY = Math.floor(Math.random() * (maxTerm + 1));
 
   // generate question and answer
   if ((ranOp == "a") & Number.isInteger(ranX + ranY)) {

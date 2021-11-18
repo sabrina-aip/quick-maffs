@@ -15,6 +15,24 @@
   text-decoration: none;
 }
 
+button {
+  background-color: white;
+  border: solid 2px black;
+  padding: 5px 25px 5px 25px;
+  border-radius: 25px;
+  color: black;
+  text-decoration: none;
+}
+
+button:hover {
+  background-color: black;
+  padding: 5px 25px 5px 25px;
+  border-radius: 25px;
+  color: white;
+  text-decoration: none;
+}
+
+
 .header {
   display: flex;
   justify-content: space-between;

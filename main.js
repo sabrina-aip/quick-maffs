@@ -125,7 +125,8 @@ function victory(){
   sessionStorage.setItem('Q', Q);
   sessionStorage.setItem('userA', userA);
   sessionStorage.setItem('trueA', trueA);
-  sessionStorage.setItem('isTrue', isTrue)
+  sessionStorage.setItem('isTrue', isTrue);
+  sessionStorage.setItem('right', score);
   window.location.replace("results.html");
 }
 

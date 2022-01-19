@@ -80,7 +80,6 @@ function postQuestion(){
   q.textContent = gen[0];
   s.textContent = `${score}/${target}`;
   answer = gen[1];
-  console.log(answer)
   a.focus();
   a.click();
   a.addEventListener('keyup', checkAnswer);
